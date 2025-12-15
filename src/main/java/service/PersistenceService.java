@@ -1,4 +1,7 @@
+package service;
+
 import com.google.gson.Gson;
+import model.Application;
 
 import java.io.FileWriter;
 import java.io.FileReader;
