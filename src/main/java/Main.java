@@ -2,12 +2,13 @@ import model.Application;
 import service.IdGenerator;
 import service.*;
 import ui.ConsoleUI;
+import server.SimpleHttpServer;
 
 import java.util.List;
 
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         PersistenceService storage = new PersistenceService();
         List<Application> jsonApplications = storage.loadApplications();
@@ -15,11 +16,8 @@ public class Main {
         IdGenerator.initialize(jsonApplications);
 
         JobBoard jobBoard = new JobBoard(jsonApplications);
-        ConsoleUI ui = new ConsoleUI(jobBoard);
-
-        ui.start();
-
-        storage.saveApplications(jsonApplications);
+        SimpleHttpServer server = new SimpleHttpServer(jobBoard);
+        server.start();
 
     }
 }
