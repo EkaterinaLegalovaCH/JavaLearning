@@ -9,13 +9,12 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-
         PersistenceService storage = new PersistenceService();
         List<Application> jsonApplications = storage.loadApplications();
 
         IdGenerator.initialize(jsonApplications);
 
-        JobBoard jobBoard = new JobBoard(jsonApplications);
+        JobBoard jobBoard = new JobBoard(jsonApplications, storage);
         SimpleHttpServer server = new SimpleHttpServer(jobBoard);
         server.start();
 

@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpServer;
 import model.Application;
 import service.JobBoard;
-import service.PersistenceService;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -13,7 +12,7 @@ import java.util.List;
 public class SimpleHttpServer {
     private final JobBoard jobBoard;
     private final Gson gson = new Gson();
-    PersistenceService storage = new PersistenceService();
+
 
     public SimpleHttpServer(JobBoard jobBoard) {
         this.jobBoard = jobBoard;
@@ -46,7 +45,6 @@ public class SimpleHttpServer {
                     String text = sb.toString();
                     Application newApp = gson.fromJson(text, Application.class);
                     jobBoard.addApplication(newApp);
-                    storage.saveApplications(applications);
 
                     exchange.sendResponseHeaders(201, -1);
                     exchange.getResponseBody().close();
@@ -61,7 +59,6 @@ public class SimpleHttpServer {
                     BufferedReader br = new BufferedReader(input);
                     int idToDel = Integer.parseInt(br.readLine());
                     jobBoard.deleteById(idToDel);
-                    storage.saveApplications(applications);
 
                     exchange.sendResponseHeaders(204, -1);
                     exchange.close();

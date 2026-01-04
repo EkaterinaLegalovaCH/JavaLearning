@@ -8,16 +8,18 @@ import java.util.Iterator;
 
 
 public class JobBoard {
-
     private final List<Application> applications;
+    private final PersistenceService persistenceService;
 
-    public JobBoard(List<Application> applications) {
+    public JobBoard(List<Application> applications, PersistenceService persistenceService) {
         this.applications = applications;
+        this.persistenceService = persistenceService;
     }
 
     public void addApplication(Application app) {
         app.Id = IdGenerator.getNextId();
         applications.add(app);
+        persistenceService.saveApplications(applications);
 
     }
 
@@ -29,6 +31,7 @@ public class JobBoard {
 
             if (app.Id == id) {
                 iterator.remove();
+                persistenceService.saveApplications(applications);
                 return true;
             }
         }
@@ -39,6 +42,7 @@ public class JobBoard {
         for (Application app : applications) {
             if (app.Id == id) {
                 app.status = newStatus;
+                persistenceService.saveApplications(applications);
                 return true;
             }
         }
