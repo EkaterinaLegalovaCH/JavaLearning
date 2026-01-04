@@ -18,6 +18,7 @@ public class JobBoard {
     public void addApplication(Application app) {
         app.Id = IdGenerator.getNextId();
         applications.add(app);
+
     }
 
     public boolean deleteById(int id) {

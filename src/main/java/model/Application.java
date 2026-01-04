@@ -17,12 +17,6 @@ public class Application {
 
     }
 
-    // method created to update status of application
-    public void updateStatus(String newStatus) {
-        this.status = newStatus;
-    }
-
-
 
     public String prettyPrint() {
         return "ID: " + Id +
